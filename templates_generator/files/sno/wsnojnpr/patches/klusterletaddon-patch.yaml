@@ -1,0 +1,12 @@
+- op: replace
+  path: /spec/clusterName
+  value: '5g-sno'
+- op: replace
+  path: /spec/clusterNamespace
+  value: '5g-sno'
+- op: replace
+  path: /metadata/name
+  value: 5g-sno
+- op: replace
+  path: /metadata/namespace
+  value: 5g-sno

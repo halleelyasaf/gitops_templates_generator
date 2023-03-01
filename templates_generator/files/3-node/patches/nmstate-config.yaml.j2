@@ -1,0 +1,32 @@
+{% for  server in (servers | default([])) %}
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: nmstate-{{ server.name }}
+  labels:
+    cluster-name: {{ cluster_name }}-nmstate
+spec:
+  config:
+    interfaces:
+      - name: {{ server.interface }}
+        type: ethernet
+        state: up
+        ipv4:
+          address:
+            - ip: {{ server.ip }}
+              prefix-length: {{ server.prefix }}
+          enabled: true
+    dns-resolver:
+      config:
+        server:
+          - {{ server.dns_server }}
+    routes:
+      config:
+        - destination: 0.0.0.0/0
+          next-hop-address: {{ server.default_gw }}
+          next-hop-interface: {{ server.interface }}
+  interfaces:
+    - name: {{ server.interface }}
+      macAddress: {{ server.interface_mac }}
+{% endfor%}

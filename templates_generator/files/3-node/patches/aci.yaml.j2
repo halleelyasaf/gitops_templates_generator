@@ -1,0 +1,24 @@
+---
+apiVersion: extensions.hive.openshift.io/v1beta1
+kind: AgentClusterInstall
+metadata:
+  name: cluster
+  namespace: cluster_name
+spec:
+  apiVIP: "{{ api_vip }}"
+  ingressVIP: "{{ ingress_vip }}"
+  clusterDeploymentRef:
+    name: {{ cluster_name }}
+  imageSetRef:
+    # determine ocp version to install
+    name: "{{ openshift_image }}"
+  networking:
+    clusterNetwork:
+      - cidr: "{{ cluster_network_cidr}}"
+        hostPrefix: 23
+    serviceNetwork:
+      - "{{ service_network_cidr }}"
+    machineNetwork:
+      - cidr: "{{ machine_network_cidr }}"
+  # yamllint disable-line rule:line-length
+  sshPublicKey: "{{ ssh_public_key }}"

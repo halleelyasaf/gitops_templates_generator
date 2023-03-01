@@ -1,0 +1,20 @@
+---
+- op: replace
+  path: /spec/clusterRef/name
+  value: '5g-core-cluster'
+- op: replace
+  path: /spec/clusterRef/namespace
+  value: '5g-core-cluster'
+- op: replace
+  path: '/spec/nmStateConfigLabelSelector/matchLabels/cluster-name'
+  value: '5g-core-cluster-nmstate'
+- op: replace
+  path: '/spec/pullSecretRef/name'
+  value: 'assisted-deployment-pull-secret'
+- op: replace
+  path: /metadata/name
+  value: infraenv
+- op: replace
+  path: /spec/sshAuthorizedKey
+  value: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQChiNzsMmgVGmrSo/anrFnsfOSPCCkkk9gzTxUyePDOFse1w/vUDSkvbZp+L49oip+AwA+OUo2VWYzsTiGJQeI6hgxTqRzW7B0MtOTRsB/wqsnwnDBFnyCicnbRqOQhzxTyraX9fRwMgUlBDTJo+H5+Bq/UvBLZvL4NetltTCMuKJem9+cwORe2CoFkKu1b8nBSm2oAydLJ+JAblRrFyB+Ah7HMiaID4INCs7g55AtRBja37qMCwtoebfjaEdvLiq4lNB0aBHBscqRtjBmOEqqdLvpazJxeLhnsuiSFu5KZ48UXydmNm9mru/T/BWL5X4ORQGVIfEVOc2VTaJ/T48BQnOPsR//QK9NTyuX1/pX789AVzNzuZ8dZvR9lKWOy4J5g/3xmnfiA4vpEQGZwjuSDcm1LnOZKASqAHIZ8r2im9HMo3GRj3eg/CTCQBKCs30pk5ZJA0jduOS8bpxYZWHdY0H6PZ8O8W43G8UnxllET/GpCzVe3E+MxvE5/Kie97DNw53XPf0Zk0DvDlTV/vdWYyf24Pb3cbT7Xv7BGg67v5PlYEV9JRTXA+0zoMfpIuWq2OrDQ/E7U2hFmWnjiVWwOO9aITDsSWlktx4OKws5ejrivW6ZNJN4YwfmDlfNbyLpOKkEwKJZhpRf2dBSyZd3v8AkAImBPnDvFsOIk7nfvYQ=='
+

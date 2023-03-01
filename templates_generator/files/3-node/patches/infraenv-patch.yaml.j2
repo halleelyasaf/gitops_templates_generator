@@ -1,0 +1,22 @@
+---
+- op: replace
+  path: /spec/additionalNTPSources
+  value: ['{{ ntp_source }}']
+- op: replace
+  path: /spec/clusterRef/name
+  value: {{ cluster_name }}
+- op: replace
+  path: /spec/clusterRef/namespace
+  value: {{ cluster_name }}
+- op: replace
+  path: '/spec/nmStateConfigLabelSelector/matchLabels/cluster-name'
+  value: '{{ cluster_name }}-nmstate'
+- op: replace
+  path: '/spec/pullSecretRef/name'
+  value: 'assisted-deployment-pull-secret'
+- op: replace
+  path: /metadata/name
+  value: infraenv
+- op: replace
+  path: '/spec/nmStateConfigLabelSelector/matchLabels/cluster-name'
+  value: '{{ cluster_name }}-nmstate'

@@ -1,0 +1,71 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: {{ cluster_name }}
+
+resources:
+  - github.com/redhat-partner-solutions/vse-ocp-bases/base/3-node?ref=main
+
+patchesStrategicMerge:
+  - ./patches/nmstate-config.yaml
+  - ./patches/aci.yaml
+
+patches:
+  - target:
+      version: v1
+      kind: Namespace
+    patch: |-
+      - op: replace
+        path: /metadata/labels/name
+        value: {{ cluster_name }}
+  - target:
+      kind: AgentClusterInstall
+    patch: |-
+      - op: replace
+        path: /spec/clusterDeploymentRef/name
+        value: {{ cluster_name }}
+      - op: replace
+        path: /metadata/name
+        value: {{ cluster_name }}
+  - target:
+      kind: SealedSecret
+      name: assisted-deployment-pull-secret
+    path: ./patches/pullsecret-sealed-patch.yaml
+{% for  server in (servers | default([])) %}
+  - target:
+      kind: Secret
+      name: bmc-{{server.name}}
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: '{{ cluster_name }}-bmc-{{server.name}}'
+{% endfor%}
+  - target:
+      kind: ManagedCluster
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: {{ cluster_name }}
+{% for  server in (servers | default([])) %}  
+  - target:
+      kind: BareMetalHost
+      name: {{server.name}}
+    path: ./patches/{{ cluster_name }}-{{server.name}}-patch.yaml
+{% endfor%}
+  - target:
+      kind: ClusterDeployment
+    path: ./patches/clusterdeployment-patch.yaml
+  - target:
+      kind: InfraEnv
+    path: ./patches/infraenv-patch.yaml
+  - target:
+      kind: KlusterletAddonConfig
+    path: ./patches/klusterletaddon-patch.yaml
+  - target:
+      kind: Provisioning
+      name: provisioning-configuration
+    patch: |-
+      - op: replace
+        path: /spec/disableVirtualMediaTLS
+        value: true

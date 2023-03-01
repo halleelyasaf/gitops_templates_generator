@@ -1,0 +1,25 @@
+- op: replace
+  path: /metadata/annotations/bmac.agent-install.openshift.io~1hostname
+  value: metal1
+- op: replace
+  path: /spec/bootMACAddress
+  value: 'B4:96:91:B7:2E:38'
+- op: replace
+  path: /spec/bmc/address
+  # yamllint disable-line rule:line-length
+  value: redfish-virtualmedia://192.168.35.156/redfish/v1/Systems/1/
+- op: replace
+  path: /spec/bmc/credentialsName
+  value: 5g-sno-bmc-secret
+- op: replace
+  path: /metadata/labels/infraenvs.agent-install.openshift.io
+  value: infraenv-5g-sno
+- op: replace
+  path: /metadata/name
+  value: metal1
+- op: remove
+  path: /spec/bmc/rootDeviceHints
+# - op: add
+#   path: /spec/rootDeviceHints
+#   value: {"deviceName" : "/dev/sda"}
+

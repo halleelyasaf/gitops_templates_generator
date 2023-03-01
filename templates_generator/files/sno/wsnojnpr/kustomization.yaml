@@ -1,0 +1,68 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: 5g-sno
+
+resources:
+  - github.com/redhat-partner-solutions/vse-ocp-bases/base/sno?ref=main
+patchesStrategicMerge:
+  - ./patches/nmstate-config.yaml
+  - ./patches/aci.yaml
+
+patches:
+  - target:
+      version: v1
+      kind: Namespace
+    patch: |-
+      - op: replace
+        path: /metadata/labels/name
+        value: '5g-sno'
+  - target:
+      kind: SealedSecret
+      name: assisted-deployment-pull-secret
+    path: ./patches/pullsecret-sealed-patch.yaml  
+  - target:
+      kind: Secret
+      name: rna4-bmc-secret
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: '5g-sno-bmc-secret'
+      - op: replace
+        path: /data/username
+        value: 'YWRtaW4K'
+      - op: replace
+        path: /data/password
+        value: 'cmVkaGF0MTIzCg=='
+  - target:
+      kind: AgentClusterInstall
+    patch: |-
+      - op: replace
+        path: /spec/clusterDeploymentRef/name
+        value: '5g-sno'
+      - op: replace
+        path: /metadata/name
+        value: '5g-sno'
+  - target:
+      kind: ManagedCluster
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: '5g-sno'
+      - op: replace
+        path: /metadata/namespace
+        value: '5g-sno'
+  - target:
+      kind: BareMetalHost
+      name: metal1
+    path: ./patches/bmh-5g-sno-patch.yaml
+  - target:
+      kind: ClusterDeployment
+    path: ./patches/clusterdeployment-patch.yaml
+  - target:
+      kind: InfraEnv
+    path: ./patches/infraenv-patch.yaml
+  - target:
+      kind: KlusterletAddonConfig
+    path: ./patches/klusterletaddon-patch.yaml

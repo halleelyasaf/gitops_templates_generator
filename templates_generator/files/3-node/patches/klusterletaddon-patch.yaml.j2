@@ -1,0 +1,10 @@
+---
+- op: replace
+  path: /spec/clusterName
+  value: {{ cluster_name }}
+- op: replace
+  path: /spec/clusterNamespace
+  value: {{ cluster_name }}
+- op: replace
+  path: /metadata/name
+  value: {{ cluster_name }}
