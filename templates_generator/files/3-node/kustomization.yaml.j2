@@ -40,6 +40,12 @@ patches:
       - op: replace
         path: /metadata/name
         value: '{{ cluster_name }}-bmc-{{server.name}}'
+      - op: replace
+        path: /data/username
+        value: {{ server.username | b64decode }}
+      - op: replace
+        path: /data/password
+        value: {{ server.password | b64decode }}
 {% endfor%}
   - target:
       kind: ManagedCluster

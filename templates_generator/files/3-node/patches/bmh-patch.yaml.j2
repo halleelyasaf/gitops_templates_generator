@@ -5,13 +5,16 @@
 - op: replace
   path: /spec/bmc/address
   # yamllint disable-line rule:line-length
-{% if virtual_machine | default(False) %}
+{% if server.type == kvm  %}
   value: redfish-virtualmedia+https://{{ kvm_host }}:8082/redfish/v1/Systems/{{ vm_id }}
+{% endif %}
+{% if server.type == baremetal %}
+  value: redfish-virtualmedia://{{ server.baremetal_ip }}/redfish/v1/Systems/1/
 {% endif %}
 - op: replace
   path: /spec/bmc/credentialsName
   value: '{{ cluster_name }}-bmc-super1'
-- op: replace
+- op: replacegit push -u origin main
   path: /metadata/labels/infraenvs.agent-install.openshift.io
   value: infraenv
 - op: replace

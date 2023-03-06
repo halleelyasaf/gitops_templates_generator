@@ -1,2 +1,16 @@
 ---
-# tasks file for templates_generator
+- name: create SealedSecret
+  shell: oc create secret generic assisted-deployment-pull-secret --dry-run=client --from-file=.dockerconfigjson=pull-secret.txt --type=kubernetes.io/dockerconfigjson -o yaml | kubeseal --controller-name=sealed-secrets-controller --controller-namespace=sealed-secrets --scope cluster-wide --format yaml > github-sealed.yaml
+  
+- name: Create all the template
+  ansible.builtin.template:
+     src: "{{ jinja_path }}{{ item }}.j2"
+     dest: "{{ config_file_path }}/{{ item }}"
+  with_items: "{{ config_file }}"
+
+- name: Create bmh template
+  ansible.builtin.template:
+     src: "{{ jinja_path }}/{{ item }}.j2"
+     dest: "{{ cluster_name }}-{{server.name}}-patch.yaml"
+  with_items: "{{ servers }}"
+
