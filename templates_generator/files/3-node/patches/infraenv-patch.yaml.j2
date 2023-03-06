@@ -15,6 +15,9 @@
   path: '/spec/pullSecretRef/name'
   value: 'assisted-deployment-pull-secret'
 - op: replace
+  path: /spec/sshAuthorizedKey
+  value: {{ ssh_public_key }}
+- op: replace
   path: /metadata/name
   value: infraenv
 - op: replace
