@@ -1,6 +1,6 @@
 ---
 - name: create SealedSecret
-  shell: oc create secret generic assisted-deployment-pull-secret --dry-run=client --from-file=.dockerconfigjson=pull-secret.txt --type=kubernetes.io/dockerconfigjson -o yaml | kubeseal --controller-name=sealed-secrets-controller --controller-namespace=sealed-secrets --scope cluster-wide --format yaml > github-sealed.yaml
+  shell: oc create secret generic assisted-deployment-pull-secret --dry-run=client --from-file=.dockerconfigjson=pull-secret.txt --type=kubernetes.io/dockerconfigjson -o json | jq '.data.".dockerconfigjson"'
   
 - name: Create all the template
   ansible.builtin.template:
