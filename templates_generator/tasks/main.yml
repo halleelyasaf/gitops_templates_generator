@@ -1,7 +1,11 @@
 ---
 - name: create SealedSecret
   shell: oc create secret generic assisted-deployment-pull-secret --dry-run=client --from-file=.dockerconfigjson=pull-secret.txt --type=kubernetes.io/dockerconfigjson -o json | jq '.data.".dockerconfigjson"'
-  
+  register: SealedSecret_output
+
+- debug: 
+    var: SealedSecret_output
+
 - name: Create all the template
   ansible.builtin.template:
      src: "{{ jinja_path }}{{ item }}.j2"
