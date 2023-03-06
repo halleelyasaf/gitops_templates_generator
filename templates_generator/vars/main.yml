@@ -7,10 +7,8 @@ config_file:
   - klusterletaddon-patch.yaml
   - nmstate-config.yaml
 
-vm_id:
-kvm_host:
 servers:
-  # server type is between kvm/baremetal
+      # server type is between kvm/baremetal
   - server1:
       - type: baremetal 
       - username: root
