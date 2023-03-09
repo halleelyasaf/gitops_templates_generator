@@ -18,16 +18,16 @@ patches:
     patch: |-
       - op: replace
         path: /metadata/labels/name
-        value: {{ cluster_name }}
+        value: '{{ cluster_name }}'
   - target:
       kind: AgentClusterInstall
     patch: |-
       - op: replace
         path: /spec/clusterDeploymentRef/name
-        value: {{ cluster_name }}
+        value: '{{ cluster_name }}'
       - op: replace
         path: /metadata/name
-        value: {{ cluster_name }}
+        value: '{{ cluster_name }}'
   - target:
       kind: SealedSecret
       name: assisted-deployment-pull-secret
@@ -42,17 +42,17 @@ patches:
         value: '{{ cluster_name }}-bmc-{{server.name}}'
       - op: replace
         path: /data/username
-        value: {{ server.username |b64encode  }}
+        value: '{{ server.username |b64encode  }}'
       - op: replace
         path: /data/password
-        value: {{ server.password |b64encode  }}
+        value: '{{ server.password |b64encode  }}'
 {% endfor%}
   - target:
       kind: ManagedCluster
     patch: |-
       - op: replace
         path: /metadata/name
-        value: {{ cluster_name }}
+        value: '{{ cluster_name }}'
 {% for  server in (servers | default([])) %}
   - target:
       kind: BareMetalHost
