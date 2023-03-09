@@ -8,7 +8,7 @@
   until: not result.failed
 
 - name: create SealedSecret
-  shell: oc create secret generic assisted-deployment-pull-secret --dry-run=client --from-file=.dockerconfigjson=pull-secret.txt --type=kubernetes.io/dockerconfigjson -o yaml | kubeseal --controller-name=sealed-secrets-controller --controller-namespace=sealed-secrets --scope cluster-wide --format json | jq '.spec.encryptedData.".dockerconfigjson"'
+  shell: oc create secret generic assisted-deployment-pull-secret --dry-run=client --from-file=.dockerconfigjson={{ pull_secret_dest }}/pull-secret.txt  --type=kubernetes.io/dockerconfigjson -o yaml | kubeseal --controller-name=sealed-secrets-controller --controller-namespace=sealed-secrets --scope cluster-wide --format json | jq '.spec.encryptedData.".dockerconfigjson"'
   register: pull_secret_encrypted
 
 - debug:
