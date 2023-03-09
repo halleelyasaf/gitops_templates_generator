@@ -35,7 +35,7 @@
 - name: Create bmh template
   ansible.builtin.template:
      src: "{{ jinja_path }}/patches//bmh-patch.yaml.j2"
-     dest: "{{ config_file_path }}/{{ cluster_name }}-{{item.name}}-patch.yaml"
+     dest: "{{ config_file_path }}/patches/{{ cluster_name }}-{{item.name}}-patch.yaml"
   with_items: "{{ servers }}"
 
 - name: Create kustomization.yaml template

@@ -42,10 +42,10 @@ patches:
         value: '{{ cluster_name }}-bmc-{{server.name}}'
       - op: replace
         path: /data/username
-        value: {{ server.username | b64decode }}
+        value: {{ server.username |b64encode  }}
       - op: replace
         path: /data/password
-        value: {{ server.password | b64decode }}
+        value: {{ server.password |b64encode  }}
 {% endfor%}
   - target:
       kind: ManagedCluster
@@ -53,7 +53,7 @@ patches:
       - op: replace
         path: /metadata/name
         value: {{ cluster_name }}
-{% for  server in (servers | default([])) %}  
+{% for  server in (servers | default([])) %}
   - target:
       kind: BareMetalHost
       name: {{server.name}}
