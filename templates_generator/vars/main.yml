@@ -10,7 +10,7 @@ config_file:
 servers:
       # server type is between kvm/baremetal
   - type: baremetal
-    username: root
+    username: admin
     password: redhat123
     name: super1
     interface: ens10f0

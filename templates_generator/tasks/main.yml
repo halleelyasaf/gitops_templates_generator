@@ -1,15 +1,14 @@
 ---
 - name: Login into the OpenShift cluster
   shell: >
-    oc login -u kubeadmin -p Hajtm-CEccV-Y8td7-2zHLJ
-    --server=https://api.5g-core-cluster.npss.jnpr.bos2.lab:6443 --insecure-skip-tls-verify=true
+    oc login -u kubeadmin -p pWx2Y-5oQdv-AjM6m-gTy5Q --server=https://api.mc.npss.jnpr.bos2.lab:6443 --insecure-skip-tls-verify=true
   register: result
   retries: 5
   delay: 10
   until: not result.failed
 
 - name: create SealedSecret
-  shell: oc create secret generic assisted-deployment-pull-secret --dry-run=client --from-file=.dockerconfigjson={{ pull_secret_dest }}/pull-secret.txt --type=kubernetes.io/dockerconfigjson -o json | jq '.data.".dockerconfigjson"'
+  shell: oc create secret generic assisted-deployment-pull-secret --dry-run=client --from-file=.dockerconfigjson=pull-secret.txt --type=kubernetes.io/dockerconfigjson -o yaml | kubeseal --controller-name=sealed-secrets-controller --controller-namespace=sealed-secrets --scope cluster-wide --format json | jq '.spec.encryptedData.".dockerconfigjson"'
   register: pull_secret_encrypted
 
 - debug:
