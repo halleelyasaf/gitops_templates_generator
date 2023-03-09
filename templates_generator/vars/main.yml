@@ -24,7 +24,7 @@ servers:
       #if use type kvm
       #- vm_id:
       #- kvm_host:
-
+pull_secret_dest: 
 api_vip: 192.168.35.51
 ingress_vip: 192.168.35.52
 cluster_name: 5g-core-cluster
