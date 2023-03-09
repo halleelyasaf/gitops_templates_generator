@@ -9,22 +9,34 @@ config_file:
 
 servers:
       # server type is between kvm/baremetal
-  - server1:
-      - type: baremetal 
-      - username: root
-      - password: redhat123
-      - name: super1
-      - interface: ens10f0
-      - ip: 192.168.35.53
-      - baremetal_ip: 192.168.35.157
-      - prefix: 25
-      - dns_server: 8.8.8.8
-      - default_gw: 192.168.35.1
-      - interface_mac: B4:96:91:B7:2E:68
-      #if use type kvm
-      #- vm_id:
-      #- kvm_host:
-pull_secret_dest: 
+  - type: baremetal
+    username: root
+    password: redhat123
+    name: super1
+    interface: ens10f0
+    ip: 192.168.35.53
+    baremetal_ip: 192.168.35.157
+    prefix: 25
+    dns_server: 8.8.8.8
+    default_gw: 192.168.35.1
+    interface_mac: B4:96:91:B7:2E:68
+    #if use type kvm
+    # vm_id:
+    # kvm_host:
+  - type: kvm
+    vm_id: test
+    kvm_host: test
+    username: root
+    password: redhat123
+    name: super2
+    interface: ens10f0
+    ip: 192.168.35.54
+    baremetal_ip: 192.168.35.158
+    prefix: 25
+    dns_server: 8.8.8.8
+    default_gw: 192.168.35.1
+    interface_mac: B4:96:ff:ff:Ff:ff
+pull_secret_dest: /home/redhat/.crucible
 api_vip: 192.168.35.51
 ingress_vip: 192.168.35.52
 cluster_name: 5g-core-cluster
@@ -35,4 +47,5 @@ machine_network_cidr: 192.168.35.0/25
 ssh_public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQChiNzsMmgVGmrSo/anrFnsfOSPCCkkk9gzTxUyePDOFse1w/vUDSkvbZp+L49oip+AwA+OUo2VWYzsTiGJQeI6hgxTqRzW7B0MtOTRsB/wqsnwnDBFnyCicnbRqOQhzxTyraX9fRwMgUlBDTJo+H5+Bq/UvBLZvL4NetltTCMuKJem9+cwORe2CoFkKu1b8nBSm2oAydLJ+JAblRrFyB+Ah7HMiaID4INCs7g55AtRBja37qMCwtoebfjaEdvLiq4lNB0aBHBscqRtjBmOEqqdLvpazJxeLhnsuiSFu5KZ48UXydmNm9mru/T/BWL5X4ORQGVIfEVOc2VTaJ/T48BQnOPsR//QK9NTyuX1/pX789AVzNzuZ8dZvR9lKWOy4J5g/3xmnfiA4vpEQGZwjuSDcm1LnOZKASqAHIZ8r2im9HMo3GRj3eg/CTCQBKCs30pk5ZJA0jduOS8bpxYZWHdY0H6PZ8O8W43G8UnxllET/GpCzVe3E+MxvE5/Kie97DNw53XPf0Zk0DvDlTV/vdWYyf24Pb3cbT7Xv7BGg67v5PlYEV9JRTXA+0zoMfpIuWq2OrDQ/E7U2hFmWnjiVWwOO9aITDsSWlktx4OKws5ejrivW6ZNJN4YwfmDlfNbyLpOKkEwKJZhpRf2dBSyZd3v8AkAImBPnDvFsOIk7nfvYQ==
 base_domain: npss.jnpr.bos2.lab
 ntp_source: 192.168.35.30
-
+jinja_path: /root/gitops_templates_generator-/templates_generator/files/3-node/patches/
+config_file_path: /root/3-node

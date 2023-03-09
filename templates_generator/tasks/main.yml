@@ -1,10 +1,20 @@
 ---
+- name: Login into the OpenShift cluster
+  shell: >
+    oc login -u kubeadmin -p Hajtm-CEccV-Y8td7-2zHLJ
+    --server=https://api.5g-core-cluster.npss.jnpr.bos2.lab:6443 --insecure-skip-tls-verify=true
+  register: result
+  retries: 5
+  delay: 10
+  until: not result.failed
+
 - name: create SealedSecret
   shell: oc create secret generic assisted-deployment-pull-secret --dry-run=client --from-file=.dockerconfigjson={{ pull_secret_dest }}/pull-secret.txt --type=kubernetes.io/dockerconfigjson -o json | jq '.data.".dockerconfigjson"'
-  register: SealedSecret_output
+  register: pull_secret_encrypted
 
-- debug: 
-    var: SealedSecret_output
+- debug:
+    var: "{{ item}}"
+  with_items: "{{ servers }}"
 
 - name: Create all the template
   ansible.builtin.template:
@@ -14,7 +24,6 @@
 
 - name: Create bmh template
   ansible.builtin.template:
-     src: "{{ jinja_path }}/{{ item }}.j2"
-     dest: "{{ cluster_name }}-{{server.name}}-patch.yaml"
+     src: "{{ jinja_path }}/bmh-patch.yaml.j2"
+     dest: "{{ config_file_path }}/{{ cluster_name }}-{{item.name}}-patch.yaml"
   with_items: "{{ servers }}"
-

@@ -1,15 +1,15 @@
 ---
 - op: replace
   path: /spec/bootMACAddress
-  value: {{ server.interface_mac }}
+  value: {{ item.interface_mac }}
 - op: replace
   path: /spec/bmc/address
   # yamllint disable-line rule:line-length
-{% if server.type == kvm  %}
-  value: redfish-virtualmedia+https://{{ kvm_host }}:8082/redfish/v1/Systems/{{ vm_id }}
+{% if item.type == "kvm"  %}
+  value: redfish-virtualmedia+https://{{ item.kvm_host }}:8082/redfish/v1/Systems/{{ item.vm_id }}
 {% endif %}
-{% if server.type == baremetal %}
-  value: redfish-virtualmedia://{{ server.baremetal_ip }}/redfish/v1/Systems/1/
+{% if item.type == "baremetal" %}
+  value: redfish-virtualmedia://{{ item.baremetal_ip }}/redfish/v1/Systems/1/
 {% endif %}
 - op: replace
   path: /spec/bmc/credentialsName
