@@ -4,10 +4,10 @@
   value: ['{{ ntp_source }}']
 - op: replace
   path: /spec/clusterRef/name
-  value: {{ cluster_name }}
+  value: '{{ cluster_name }}'
 - op: replace
   path: /spec/clusterRef/namespace
-  value: {{ cluster_name }}
+  value: '{{ cluster_name }}'
 - op: replace
   path: '/spec/nmStateConfigLabelSelector/matchLabels/cluster-name'
   value: '{{ cluster_name }}-nmstate'
