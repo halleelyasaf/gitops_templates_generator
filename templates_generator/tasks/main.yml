@@ -12,8 +12,7 @@
   register: pull_secret_encrypted
 
 - debug:
-    var: "{{ item }}"
-  with_items: "{{ servers }}"
+    var: "{{ pull_secret_encrypted }}"
 
 - name: Create folder for the template
   file:
