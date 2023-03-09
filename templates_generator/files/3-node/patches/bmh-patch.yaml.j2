@@ -14,7 +14,7 @@
 - op: replace
   path: /spec/bmc/credentialsName
   value: '{{ cluster_name }}-bmc-super1'
-- op: replacegit push -u origin main
+- op: replace
   path: /metadata/labels/infraenvs.agent-install.openshift.io
   value: infraenv
 - op: replace
