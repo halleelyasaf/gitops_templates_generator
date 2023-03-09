@@ -13,10 +13,10 @@
 {% endif %}
 - op: replace
   path: /spec/bmc/credentialsName
-  value: '{{ cluster_name }}-bmc-{{ item.type }}'
+  value: '{{ cluster_name }}-bmc-{{ item.name }}'
 - op: replace
   path: /metadata/labels/infraenvs.agent-install.openshift.io
   value: infraenv
 - op: replace
   path: /metadata/name
-  value: '{{ cluster_name }}-{{ item.type }}'
+  value: '{{ cluster_name }}-{{ item.name }}'
