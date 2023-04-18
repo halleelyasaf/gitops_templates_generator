@@ -1,0 +1,77 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: SiteConfig
+metadata:
+  name: "{{ cluster_name }}"
+  namespace: "{{ cluster_name }}"
+spec:
+  baseDomain: "cars.lab"
+  pullSecretRef:
+    name: "assisted-deployment-pull-secret"
+  clusterImageSetNameRef: "{{ openshift_image }}"
+# yamllint disable-line rule:line-length
+  sshPublicKey: "{{ ssh_public_key }}"
+  clusters:
+    - clusterName: "{{ cluster_name }}"
+      clusterLabels:
+        group-vdu: ""
+        common-49: true
+        sites: "r740xls"
+      networkType: "OVNKubernetes"
+      clusterNetwork:
+        - cidr: "{{ cluster_network_cidr }}"
+          hostPrefix: "/{{ cluster_network_prefix}}"
+      serviceNetwork:
+        - "{{ service_network_cidr }}"
+      machineNetwork:
+        - cidr: "{{ machine_network_cidr }}"
+      additionalNTPSources:
+        - {{ ntp_source }}
+      nodes:
+      {% for  server in ( servers | default([])) %}
+        - hostName: "{{ server.name }}.{{ cluster_name }}.{{ base_domain }}"
+          role: {{ server.role }}
+# yamllint disable-line rule:line-length
+        {% if server.type == "kvm"  %}
+          bmcAddress: redfish-virtualmedia+https://{{ server.kvm_host }}:8082/redfish/v1/Systems/{{ server.vm_id }}
+        {% endif %}
+        {% if server.type == "baremetal" %}
+          bmcAddress: redfish-virtualmedia://{{ server.baremetal_ip }}/redfish/v1/Systems/1/
+        {% endif %}
+          bmcCredentialsName:
+            name: "{{ cluster_name }}-bmc-creds-secret"
+          bootMACAddress: "{{ server.interface_mac }}"
+          bootMode: "{{ server.bootmode }}"
+          cpuset: "0-3,48-51"
+          nodeNetwork:
+            config:
+              interfaces:
+                - name: {{ server.interface }}
+                  type: ethernet
+                  state: up
+                  ipv4:
+                    enabled: true
+                    address:
+                      - ip: {{ server.ip }}
+                        prefix-length: {{ server.prefix }}
+                  ipv6:
+                    enabled: false
+              dns-resolver:
+                config:
+                  search:
+                    - {{ base_domain }}
+                  server:
+                    - {{ server.dns_server }}
+              routes:
+                config:
+                  - destination: 0.0.0.0/0
+                    next-hop-interface: {{ server.interface }}
+                    next-hop-address: {{ server.default_gw }}
+                    table-id: 254
+            interfaces:
+              - name: "{{ server.interface }}"
+                macAddress: {{ server.interface_mac }}
+      {% endfor%}
+
+
+
