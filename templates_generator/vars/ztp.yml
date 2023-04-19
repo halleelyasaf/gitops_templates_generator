@@ -79,7 +79,7 @@ servers:
     username: admin
     password: redhat123
     interface: ens10f0
-    ip: 192.168.35.56
+    ip: 192.168.35.57
     baremetal_ip: 192.168.35.161
     prefix: 25
     dns_server: 8.8.8.8
