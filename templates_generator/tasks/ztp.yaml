@@ -8,6 +8,6 @@
 - name: Create all the template
   ansible.builtin.template:
      src: "{{ item }}"
-     dest: /tmp/{{ item | basename | regex_replace('\.j2$', '') }}
+     dest: {{ config_file_path }}/{{ item | basename | regex_replace('\.j2$', '') }}
   with_fileglob:
     - "{{ jinja_path }}/*.j2"
