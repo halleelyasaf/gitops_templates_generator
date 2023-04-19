@@ -32,10 +32,10 @@ spec:
      - hostName: "{{ server.name }}.{{ cluster_name }}.{{ base_domain }}"
          role: {{ server.role }}
   {% if server.type == "kvm"  %}
-bmcAddress: redfish-virtualmedia+https://{{ server.kvm_host }}:8082/redfish/v1/Systems/{{ server.vm_id }}
+       bmcAddress: redfish-virtualmedia+https://{{ server.kvm_host }}:8082/redfish/v1/Systems/{{ server.vm_id }}
   {% endif %}
   {% if server.type == "baremetal" %}
-bmcAddress: redfish-virtualmedia://{{ server.baremetal_ip }}/redfish/v1/Systems/1/
+        bmcAddress: redfish-virtualmedia://{{ server.baremetal_ip }}/redfish/v1/Systems/1/
   {% endif %}
   bmcCredentialsName:
           name: "{{ cluster_name }}-bmc-creds-secret"
