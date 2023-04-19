@@ -7,7 +7,7 @@
 
 - name: Create all the template
   ansible.builtin.template:
-     src: "{{ item }}"
+     src: "{{ item }}.j2"
      dest: "{{ config_file_path }}"
   with_fileglob:
-    - "{{ jinja_path }}/*.j2"
+    - "{{ jinja_path }}/*"
