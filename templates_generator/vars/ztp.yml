@@ -18,10 +18,10 @@ password: redhat123
 servers:
       # server type is between kvm/baremetal
   - type: baremetal
+    name: super1
     bootmode: "UEFI"
     username: admin
     password: redhat123
-    name: super1
     interface: ens10f0
     ip: 192.168.35.53
     baremetal_ip: 192.168.35.157
@@ -30,20 +30,76 @@ servers:
     default_gw: 192.168.35.1
     interface_mac: B4:96:91:B7:2E:68
     role: master
-    #if use type kvm
-    # vm_id:
-    # kvm_host:
-  - type: kvm
-    vm_id: test
-    kvm_host: test
-    username: root
-    password: redhat123
+
+  - type: baremetal
     name: super2
+    bootmode: "UEFI"
+    username: admin
+    password: redhat123
     interface: ens10f0
     ip: 192.168.35.54
     baremetal_ip: 192.168.35.158
     prefix: 25
     dns_server: 8.8.8.8
     default_gw: 192.168.35.1
-    interface_mac: B4:96:ff:ff:Ff:ff
+    interface_mac: B4:96:91:B7:2D:18
+    role: master
+  
+  - type: baremetal
+    name: super3
+    bootmode: "UEFI"
+    username: admin
+    password: redhat123
+    interface: ens10f0
+    ip: 192.168.35.55
+    baremetal_ip: 192.168.35.159
+    prefix: 25
+    dns_server: 8.8.8.8
+    default_gw: 192.168.35.1
+    interface_mac: B4:96:91:B7:2E:5C
+    role: master
+
+  - type: baremetal
+    name: worker1
+    bootmode: "UEFI"
+    username: admin
+    password: redhat123
+    interface: ens10f0
+    ip: 192.168.35.56
+    baremetal_ip: 192.168.35.160
+    prefix: 25
+    dns_server: 8.8.8.8
+    default_gw: 192.168.35.1
+    interface_mac: B4:96:91:BE:36:94
     role: worker
+
+  - type: baremetal
+    name: worker2
+    bootmode: "UEFI"
+    username: admin
+    password: redhat123
+    interface: ens10f0
+    ip: 192.168.35.56
+    baremetal_ip: 192.168.35.161
+    prefix: 25
+    dns_server: 8.8.8.8
+    default_gw: 192.168.35.1
+    interface_mac: B4:96:91:BE:35:A8
+    role: worker    
+    #if use type kvm
+    # vm_id:
+    # kvm_host:
+  # - type: kvm
+  #   vm_id: test
+  #   kvm_host: test
+  #   username: root
+  #   password: redhat123
+  #   name: super2
+  #   interface: ens10f0
+  #   ip: 192.168.35.54
+  #   baremetal_ip: 192.168.35.158
+  #   prefix: 25
+  #   dns_server: 8.8.8.8
+  #   default_gw: 192.168.35.1
+  #   interface_mac: B4:96:ff:ff:Ff:ff
+  #   role: worker
