@@ -39,39 +39,39 @@ spec:
   {% endif %}
        bmcCredentialsName:
            name: "{{ cluster_name }}-bmc-creds-secret"
-        bootMACAddress: "{{ server.interface_mac }}"
-    {% if bootmode is defined %}
-      bootMode: "{{ server.bootmode }}"
-    {% endif %}
-    cpuset: "0-3,48-51"
-        nodeNetwork:
-          config:
+          bootMACAddress: "{{ server.interface_mac }}"
+      {% if bootmode is defined %}
+        bootMode: "{{ server.bootmode }}"
+      {% endif %}
+      cpuset: "0-3,48-51"
+          nodeNetwork:
+            config:
+              interfaces:
+                - name: {{ server.interface }}
+                  type: ethernet
+                  state: up
+                  ipv4:
+                    enabled: true
+                    address:
+                      - ip: {{ server.ip }}
+                        prefix-length: {{ server.prefix }}
+                  ipv6:
+                    enabled: false
+              dns-resolver:
+                config:
+                  search:
+                    - {{ base_domain }}
+                  server:
+                    - {{ server.dns_server }}
+              routes:
+                config:
+                  - destination: 0.0.0.0/0
+                    next-hop-interface: {{ server.interface }}
+                    next-hop-address: {{ server.default_gw }}
+                    table-id: 254
             interfaces:
-              - name: {{ server.interface }}
-                type: ethernet
-                state: up
-                ipv4:
-                  enabled: true
-                  address:
-                    - ip: {{ server.ip }}
-                      prefix-length: {{ server.prefix }}
-                ipv6:
-                  enabled: false
-            dns-resolver:
-              config:
-                search:
-                  - {{ base_domain }}
-                server:
-                  - {{ server.dns_server }}
-            routes:
-              config:
-                - destination: 0.0.0.0/0
-                  next-hop-interface: {{ server.interface }}
-                  next-hop-address: {{ server.default_gw }}
-                  table-id: 254
-          interfaces:
-            - name: "{{ server.interface }}"
-              macAddress: {{ server.interface_mac }}
+              - name: "{{ server.interface }}"
+                macAddress: {{ server.interface_mac }}
   {% endfor%}
 
 
