@@ -13,11 +13,13 @@
   register: pull_secret_encrypted
 
 - debug:
-    var: "{{ pull_secret_encrypted }}"
+    msg: "{{ pull_secret_encrypted.stdout }}"
 
 - name: Run 3-node generator
   ansible.builtin.import_tasks: 3-node.yaml
   when: type_of_cluster == "3-node"
 
-
+- name: Run ztp generator
+  ansible.builtin.import_tasks: ztp.yaml
+  when: type_of_cluster == "ztp"
  
