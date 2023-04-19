@@ -41,7 +41,9 @@ spec:
           bmcCredentialsName:
             name: "{{ cluster_name }}-bmc-creds-secret"
           bootMACAddress: "{{ server.interface_mac }}"
+        {% if bootmode is defined %}
           bootMode: "{{ server.bootmode }}"
+        {% endif %}
           cpuset: "0-3,48-51"
           nodeNetwork:
             config:
