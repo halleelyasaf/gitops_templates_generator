@@ -1,6 +1,4 @@
 ---
-- name: include vars 
-  ansible.builtin.include_vars: "{{ type_of_cluster }}".yml
 
 - name: Login into the OpenShift cluster
   shell: >
