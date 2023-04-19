@@ -49,3 +49,4 @@ base_domain: npss.jnpr.bos2.lab
 ntp_source: 192.168.35.30
 jinja_path: /root/gitops_templates_generator-/templates_generator/files/3-node
 config_file_path: /root/3-node
+type_of_cluster: 3-node
