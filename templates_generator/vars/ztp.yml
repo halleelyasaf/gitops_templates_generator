@@ -10,8 +10,9 @@ service_network_cidr: 172.30.0.0/16
 machine_network_cidr: 192.168.35.0/25
 base_domain: npss.jnpr.bos2.lab
 ntp_source: 192.168.35.30
-jinja_path: /root/gitops_templates_generator-/templates_generator/files/3-node
-config_file_path: /root/3-node
+jinja_path: /root/gitops_templates_generator-/templates_generator/files/ztp
+config_file_path: /root/ztp
+type_of_cluster: ztp
 servers:
       # server type is between kvm/baremetal
   - type: baremetal
