@@ -1,0 +1,28 @@
+---
+
+- name: Create folder for the template
+  file:
+    path: "{{ config_file_path }}"
+    state: directory
+
+- name: Create folder for the patch
+  file:
+    path: "{{ config_file_path }}/patches"
+    state: directory 
+
+- name: Create all the template
+  ansible.builtin.template:
+     src: "{{ jinja_path }}/patches/{{ item }}.j2"
+     dest: "{{ config_file_path }}/patches/{{ item }}"
+  with_items: "{{ config_file }}"
+
+- name: Create bmh template
+  ansible.builtin.template:
+     src: "{{ jinja_path }}/patches//bmh-patch.yaml.j2"
+     dest: "{{ config_file_path }}/patches/{{ cluster_name }}-{{item.name}}-patch.yaml"
+  with_items: "{{ servers }}"
+
+- name: Create kustomization.yaml template
+  ansible.builtin.template:
+     src: "{{ jinja_path }}/kustomization.yaml.j2"
+     dest: "{{ config_file_path }}/kustomization.yaml"

@@ -7,37 +7,16 @@
   delay: 10
   until: not result.failed
 
-- name: create SealedSecret
+- name: Create SealedSecret
   shell: oc create secret generic assisted-deployment-pull-secret --dry-run=client --from-file=.dockerconfigjson={{ pull_secret_dest }}/pull-secret.txt  --type=kubernetes.io/dockerconfigjson -o yaml | kubeseal --controller-name=sealed-secrets-controller --controller-namespace=sealed-secrets --scope cluster-wide --format json | jq '.spec.encryptedData.".dockerconfigjson"'
   register: pull_secret_encrypted
 
 - debug:
     var: "{{ pull_secret_encrypted }}"
 
-- name: Create folder for the template
-  file:
-    path: "{{ config_file_path }}"
-    state: directory 
+- name: Run 3-node generator
+  ansible.builtin.import_tasks: 3-node.yaml
+  when: type_of_cluster == 3-node
 
-- name: Create folder for the patch
-  file:
-    path: "{{ config_file_path }}/patches"
-    state: directory 
 
-- name: Create all the template
-  ansible.builtin.template:
-     src: "{{ jinja_path }}/patches/{{ item }}.j2"
-     dest: "{{ config_file_path }}/patches/{{ item }}"
-  with_items: "{{ config_file }}"
-
-- name: Create bmh template
-  ansible.builtin.template:
-     src: "{{ jinja_path }}/patches//bmh-patch.yaml.j2"
-     dest: "{{ config_file_path }}/patches/{{ cluster_name }}-{{item.name}}-patch.yaml"
-  with_items: "{{ servers }}"
-
-- name: Create kustomization.yaml template
-  ansible.builtin.template:
-     src: "{{ jinja_path }}/kustomization.yaml.j2"
-     dest: "{{ config_file_path }}/kustomization.yaml"
  
