@@ -28,7 +28,7 @@ spec:
       additionalNTPSources:
         - {{ ntp_source }}
       nodes:
-      {% for  server in ( servers | default([])) %}
+    {% for  server in ( servers | default([])) %}
         - hostName: "{{ server.name }}.{{ cluster_name }}.{{ base_domain }}"
           role: {{ server.role }}
         {% if server.type == "kvm"  %}
@@ -72,7 +72,7 @@ spec:
             interfaces:
               - name: "{{ server.interface }}"
                 macAddress: {{ server.interface_mac }}
-      {% endfor%}
+    {% endfor%}
 
 
 
