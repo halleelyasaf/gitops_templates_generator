@@ -5,7 +5,7 @@ metadata:
   name: "{{ cluster_name }}"
   namespace: "{{ cluster_name }}"
 spec:
-  baseDomain: "cars.lab"
+  baseDomain: "{{ base_domain }}"
   pullSecretRef:
     name: "assisted-deployment-pull-secret"
   clusterImageSetNameRef: "{{ openshift_image }}"
