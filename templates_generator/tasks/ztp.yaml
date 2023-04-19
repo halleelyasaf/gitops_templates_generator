@@ -10,4 +10,4 @@
      src: "{{ item }}"
      dest: "{{ config_file_path }}{{ item }}"
   with_fileglob:
-    - ../files/*.j2
+    - "{{ jinja_path }}*.j2"
