@@ -19,7 +19,7 @@
 
 - name: Run 3-node generator
   ansible.builtin.import_tasks: 3-node.yaml
-  when: type_of_cluster == 3-node
+  when: type_of_cluster == "3-node"
 
 
  
