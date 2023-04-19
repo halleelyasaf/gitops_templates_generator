@@ -29,8 +29,8 @@ spec:
         - {{ ntp_source }}
       nodes:
   {% for  server in ( servers | default([])) %}
-    - hostName: "{{ server.name }}.{{ cluster_name }}.{{ base_domain }}"
-        role: {{ server.role }}
+     - hostName: "{{ server.name }}.{{ cluster_name }}.{{ base_domain }}"
+         role: {{ server.role }}
       {% if server.type == "kvm"  %}
         bmcAddress: redfish-virtualmedia+https://{{ server.kvm_host }}:8082/redfish/v1/Systems/{{ server.vm_id }}
       {% endif %}
