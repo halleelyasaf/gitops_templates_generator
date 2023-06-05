@@ -23,7 +23,7 @@ patches:
        value: '{{ cluster_name }}'
      - op: replace
        path: /spec/encryptedData/.dockerconfigjson
-       value: '{{ pull_secret_encrypted.stdout }}'
+       value: '{{ pull_secret_encrypted.stdout[1:-1] }}'
      - op: replace
        path: /spec/encryptedData/type
      - op: replace

@@ -15,5 +15,5 @@
 - name: Create bmh template
   ansible.builtin.template:
      src: "{{ jinja_path }}/bmc-creds-secret.yaml.j2"
-     dest: "~/ztp/{{ cluster_name }}-{{item.name}}.yaml"
+     dest: "~/ztp/{{ cluster_name }}-bmc-creds-{{item.name}}.yaml"
   with_items: "{{ servers }}"
