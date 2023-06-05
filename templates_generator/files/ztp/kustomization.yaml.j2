@@ -8,7 +8,7 @@ generators:
 
 resources:
 {% for  server in ( servers | default([])) %}
-   - 5g-core-cluster-bmc-creds-{{ item.name }}.yaml
+   - 5g-core-cluster-bmc-creds-{{ server.name }}.yaml
 {% endfor%}
 
 patches:
