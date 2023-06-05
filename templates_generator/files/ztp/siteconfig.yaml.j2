@@ -23,8 +23,8 @@ spec:
           hostPrefix: "/{{ cluster_network_prefix}}"
       serviceNetwork:
         - "{{ service_network_cidr }}"
-      machineNetwork:
-        - cidr: "{{ machine_network_cidr }}"
+      apiVIP: {{ api_vip }}
+      ingressVIP: {{ ingress_vip }}
       additionalNTPSources:
         - {{ ntp_source }}
       nodes:
