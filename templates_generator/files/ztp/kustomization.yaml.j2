@@ -7,23 +7,11 @@ generators:
 - siteconfig.yaml
 
 resources:
- - github.com/redhat-partner-solutions/vse-ocp-bases/base/ztp/site-config?ref=main
+{% for  server in ( servers | default([])) %}
+   - 5g-core-cluster-bmc-creds-{{ item.name }}.yaml
+{% endfor%}
+
 patches:
- - target:
-    kind: Secret
-   patch: |-
-     - op: replace
-       path: /metadata/name
-       value: '{{ cluster_name }}-bmc-creds-secret'
-     - op: replace
-       path: /metadata/namespace
-       value: '{{ cluster_name }}'
-     - op: replace
-       path: /data/username
-       value: '{{ username | b64encode  }}'
-     - op: replace
-       path: /data/password
-       value: '{{ password | b64encode  }}'
  - target:
     kind: SealedSecret
    patch: |-

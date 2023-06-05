@@ -38,7 +38,7 @@ spec:
      bmcAddress: redfish-virtualmedia://{{ server.baremetal_ip }}/redfish/v1/Systems/1/
   {% endif %}
        bmcCredentialsName:
-           name: "{{ cluster_name }}-bmc-creds-secret"
+           name: "{{ cluster_name }}-bmc-creds-{{ item.name }}"
          bootMACAddress: "{{ server.interface_mac }}"
     {% if bootmode is defined %}
       bootMode: "{{ server.bootmode }}"
