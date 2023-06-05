@@ -13,7 +13,7 @@
     - "{{ jinja_path }}/{{ config_file }}.j2"
 
 
-    - name: Create bmh template
+- name: Create bmh template
   ansible.builtin.template:
      src: "{{ jinja_path }}/bmc-creds-secret.yaml.j2"
      dest: "{{ config_file_path }}{{ cluster_name }}-{{item.name}}.yaml"
