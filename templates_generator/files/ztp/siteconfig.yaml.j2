@@ -20,7 +20,7 @@ spec:
       networkType: "OVNKubernetes"
       clusterNetwork:
         - cidr: "{{ cluster_network_cidr }}"
-          hostPrefix: "{{ cluster_network_prefix}}"
+          hostPrefix: {{ cluster_network_prefix}}
       serviceNetwork:
         - "{{ service_network_cidr }}"
       apiVIP: {{ api_vip }}
