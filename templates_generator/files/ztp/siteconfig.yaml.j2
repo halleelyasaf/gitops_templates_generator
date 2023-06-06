@@ -23,8 +23,10 @@ spec:
           hostPrefix: {{ cluster_network_prefix}}
       serviceNetwork:
         - "{{ service_network_cidr }}"
+  {% if ztp_type == "full_cluster"  %}
       apiVIP: {{ api_vip }}
       ingressVIP: {{ ingress_vip }}
+  {% endif %}  
       additionalNTPSources:
         - {{ ntp_source }}
       nodes:

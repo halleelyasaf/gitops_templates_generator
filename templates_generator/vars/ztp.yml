@@ -17,6 +17,7 @@ ntp_source: 192.168.35.30
 jinja_path: /root/gitops_templates_generator-/templates_generator/files/ztp
 config_file_path: /root/ztp
 type_of_cluster: ztp
+ztp_type: sno #full_cluster/sno
 username: admin
 password: redhat123
 servers:
